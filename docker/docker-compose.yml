@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  influx:
+    container_name: vishveshyadav-influx
+    restart: always
+    build:
+      dockerfile: Dockerfile.influx
+      context: ./
+    ports:
+      - '8086:8086'
+
+  application:
+    container_name: vishveshyadav-metric-application
+    build:
+      dockerfile: Dockerfile.app
+      context: ./
+    depends_on:
+      - influx
+    volumes:
+      - ./:/tmp
+    ports:
+      - '8085:8085'
+    environment:
+      - JAR_FILE=metric-0.0.1-SNAPSHOT.jar
+      - SCRIPT_FILE=startup.sh

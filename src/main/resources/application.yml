@@ -1,0 +1,17 @@
+server:
+  port: 8085
+
+management:
+  metrics:
+    export:
+      influx:
+        auto-create-db: true
+        db: customdb
+        enabled: true
+        uri: http://influx:8086
+        user-admin: THOR
+        step: 10s
+  endpoints:
+    web:
+      exposure:
+        include: "*"
