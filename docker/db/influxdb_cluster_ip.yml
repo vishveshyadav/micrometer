@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: influx-cluster-ip-service
+spec:
+  type: ClusterIP
+  selector:
+    name: influx
+    type: backend_db
+  ports:
+    - port: 8086
+      targetPort: 8086

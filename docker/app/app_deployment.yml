@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+spec:
+  selector:
+    matchLabels:
+      name: app
+      type: backend
+  template:
+    metadata:
+      labels:
+        name: app
+        type: backend
+    spec:
+      containers:
+        - name: app
+          image: vishveshyadav/metric
+          ports:
+            - containerPort: 8085
+          env:
+            - name: SCRIPT_FILE
+              value: startup.sh

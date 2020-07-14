@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: influx-db-deployment
+spec:
+  selector:
+    matchLabels:
+      name: influx
+      type: backend_db
+  template:
+    metadata:
+      labels:
+        name: influx
+        type: backend_db
+    spec:
+      containers:
+        - name: influx
+          image: vishveshyadav/influxdb
+          ports:
+            - containerPort: 8086
+
