@@ -12,6 +12,6 @@ install:
   - docker build -t vishveshyadav/influxdb -f ./docker/Dockerfile.influx ./docker
 
 after_success:
-  - echo "${DOCKER_PASSWORD}" | docker login -u "${DOKCER_ID}" --password-stdin
+  - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_ID}" --password-stdin
   - docker push vishveshyadav/metric
   - docker push vishveshyadav/influxdb
