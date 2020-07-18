@@ -2,10 +2,8 @@ language: java
 
 services:
   - docker
-  - influxdb
 
 before_install:
-  - influxd
   - mvn clean install
   - cp ./target/metric-0.0.1-SNAPSHOT.jar ./docker/metric-0.0.1-SNAPSHOT.jar
 
