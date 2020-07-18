@@ -3,19 +3,24 @@ language: java
 services:
   - docker
 
-before_install:
+install:
   - mvn clean install
   - cp ./target/metric-0.0.1-SNAPSHOT.jar ./docker/metric-0.0.1-SNAPSHOT.jar
 
-install:
+after_success:
   - docker build -t vishveshyadav/metric -f ./docker/Dockerfile.app  ./docker
   - docker build -t vishveshyadav/influxdb -f ./docker/Dockerfile.influx ./docker
-
-after_success:
   - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_ID}" --password-stdin
   - docker push vishveshyadav/metric
   - docker push vishveshyadav/influxdb
 
 branches:
   only:
-   - master
+    - master
+notifications:
+  email:
+    recipients:
+      - vishveshyadav@outlook.com
+    on_success: always
+    on_failure: always
+    on_error: always
