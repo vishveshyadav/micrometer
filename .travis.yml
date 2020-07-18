@@ -1,10 +1,9 @@
 language: java
+
 sudo: required
+
 services:
   - docker
-cache:
-  - bundler: true
-  - cocoapods: true
 
 before_install:
   - mvn clean install
@@ -18,3 +17,7 @@ after_success:
   - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_ID}" --password-stdin
   - docker push vishveshyadav/metric
   - docker push vishveshyadav/influxdb
+
+branches:
+  only:
+   - master
