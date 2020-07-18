@@ -1,9 +1,11 @@
-language: generic
-sudo : required
-
+language: java
+sudo: required
 services:
   - docker
 
 before_install:
+  - mvn clean install
+  - cp ./target/metric-0.0.1-SNAPSHOT.jar ./docker/metric-0.0.1-SNAPSHOT.jar
+install:
   - docker build -t vishveshyadav/metric -f ./docker/Dockerfile.app  ./docker
   - docker build -t vishveshyadav/influxdb -f ./docker/Dockerfile.influx ./docker
