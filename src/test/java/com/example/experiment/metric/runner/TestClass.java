@@ -19,11 +19,11 @@ public class TestClass {
         ExecutorService threadpool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), threadFactory);
 
         Runnable runnable = () -> {
-            System.out.println("Hello running inside :" + Thread.currentThread().getName());
+            System.out.println("Hello running inside runnable on thread :" + Thread.currentThread().getName());
         };
 
         Callable<Integer> callable = () -> {
-            System.out.println("Hello running inside :" + Thread.currentThread().getName());
+            System.out.println("Hello running inside callable on thread :" + Thread.currentThread().getName());
             return 100;
         };
 
@@ -39,6 +39,7 @@ public class TestClass {
                     return integer;
 
                 })
+                .publishOn(Schedulers.fromExecutorService(threadpool))
                 .doOnNext(integer -> System.out.println("Do On next on "+ Thread.currentThread().getName()))
                 .subscribe(integer -> System.out.println(integer + " Result Obtained on "+ Thread.currentThread().getName()));
 

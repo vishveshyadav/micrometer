@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import javax.validation.Valid;
+import java.util.concurrent.ExecutorService;
 import java.util.function.Function;
 
 @RestController
@@ -29,6 +31,8 @@ public class MetricController {
 
     @Autowired
     private RequestToModelMapper requestToModelMapper;
+    @Autowired
+    private ExecutorService executorService;
 
     private Timer timer;
     private Counter counter;
@@ -39,12 +43,13 @@ public class MetricController {
     public Mono<ResponseEntity<TestModel>> getTestModel(@ApiParam(required = true) @Valid @RequestBody TestModelRequest testModelRequest) {
         return Mono.just(requestToModelMapper.requestToModel(testModelRequest))
                 .name("fluxcreate")
+                .subscribeOn(Schedulers.fromExecutorService(executorService))
                 .map(testModel -> {
                     counter.increment();
                     testModel.setDescription("Changed inside controller");
                     return testModel;
                 })
-                .doOnNext(testModel -> System.out.println(testModel))
+                .doOnNext(testModel -> System.out.println(testModel + "Processed on thread " + Thread.currentThread().getName()))
                 .transform(processOutPut())
                 .metrics();
 
