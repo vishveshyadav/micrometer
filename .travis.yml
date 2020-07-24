@@ -5,7 +5,7 @@ services:
 
 install:
   - mvn clean install
-  - cp ./target/metric-0.0.1-SNAPSHOT.jar ./docker/metric-0.0.1-SNAPSHOT.jar
+  - cp ./target/metric-0.0.1-SNAPSHOT-main.jar ./docker/metric-0.0.1-SNAPSHOT-main.jar
 
 after_success:
   - docker build -t vishveshyadav/metric -f ./docker/Dockerfile.app  ./docker
