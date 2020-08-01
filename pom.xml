@@ -148,7 +148,7 @@
                 <version>2.22.2</version>
                 <configuration>
                     <includes>
-                        <include>TestClass.java</include>
+                        <include>%regex[.*Test.*]</include>
                     </includes>
                 </configuration>
 
