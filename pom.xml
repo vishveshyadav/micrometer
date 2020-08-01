@@ -148,7 +148,7 @@
                 <version>2.22.2</version>
                 <configuration>
                     <includes>
-                        <include>%regex[.*Test.*]</include>
+                        <include>%regex[.*UnitTest.*]</include>
                     </includes>
                 </configuration>
 

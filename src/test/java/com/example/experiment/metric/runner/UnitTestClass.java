@@ -12,7 +12,7 @@ import reactor.test.StepVerifier;
 import java.util.concurrent.*;
 
 @ExtendWith(SpringExtension.class)
-public class TestClass {
+public class UnitTestClass {
 
 
     @Test
