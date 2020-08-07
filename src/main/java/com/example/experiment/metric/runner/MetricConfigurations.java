@@ -12,21 +12,21 @@ import java.net.UnknownHostException;
 @Configuration
 public class MetricConfigurations {
 
-    @Bean
-    public TimedAspect timedAspect(MeterRegistry meterRegistry){
-        return new TimedAspect(meterRegistry);
-    }
+  @Bean
+  public TimedAspect timedAspect(MeterRegistry meterRegistry) {
+    return new TimedAspect(meterRegistry);
+  }
 
-    @Bean
-    public String hostName() throws UnknownHostException {
-        return InetAddress.getLocalHost().getHostName();
-    }
+  @Bean
+  public String hostName() throws UnknownHostException {
+    return InetAddress.getLocalHost().getHostName();
+  }
 
-    @Bean
-    public MeterRegistryCustomizer customizer(String hostName) {
-        return (registry) -> {
-            registry.config().commonTags(new String[]{"host", hostName});
-        };
-    }
+  @Bean
+  public MeterRegistryCustomizer customizer(String hostName) {
+    return (registry) -> {
+      registry.config().commonTags(new String[]{"host", hostName});
+    };
+  }
 
 }

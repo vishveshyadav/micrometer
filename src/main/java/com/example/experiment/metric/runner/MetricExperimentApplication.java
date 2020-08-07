@@ -12,14 +12,15 @@ import java.util.concurrent.ThreadFactory;
 
 @SpringBootApplication(scanBasePackages = "com.example.experiment.metric")
 public class MetricExperimentApplication {
-    public static void main(String[] args) {
-        Schedulers.enableMetrics();
-        SpringApplication.run(MetricExperimentApplication.class, args);
-    }
 
-    @Bean
-    public ExecutorService initThreadPool() {
-        ThreadFactory threadPool = new BasicThreadFactory.Builder().namingPattern("CustomThread - %d").build();
-        return Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), threadPool);
-    }
+  public static void main(String[] args) {
+    Schedulers.enableMetrics();
+    SpringApplication.run(MetricExperimentApplication.class, args);
+  }
+
+  @Bean
+  public ExecutorService initThreadPool() {
+    ThreadFactory threadPool = new BasicThreadFactory.Builder().namingPattern("CustomThread - %d").build();
+    return Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), threadPool);
+  }
 }

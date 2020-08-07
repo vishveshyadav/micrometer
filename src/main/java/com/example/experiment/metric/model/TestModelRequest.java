@@ -12,13 +12,13 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class TestModelRequest {
 
-    @ApiModelProperty(required = true, example = "126009")
-    @NotBlank
-    private String product;
-    @ApiModelProperty(required = true, example = "STORE")
-    @NotBlank
-    private String locationType;
-    @ApiModelProperty(required = true, example = "S001")
-    @NotBlank
-    private String locationId;
+  @ApiModelProperty(required = true, example = "126009")
+  @NotBlank
+  private String product;
+  @ApiModelProperty(required = true, example = "STORE")
+  @NotBlank
+  private String locationType;
+  @ApiModelProperty(required = true, example = "S001")
+  @NotBlank
+  private String locationId;
 }

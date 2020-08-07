@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  influx:
+  localhost:
     container_name: vishveshyadav-influx
     restart: always
     build:

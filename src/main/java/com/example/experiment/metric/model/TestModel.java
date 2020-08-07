@@ -12,12 +12,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TestModel {
 
-    @ApiModelProperty(required = true)
-    private String product;
-    @ApiModelProperty(required = true)
-    private String locationType;
-    @ApiModelProperty(required = true)
-    private String locationId;
-    @ApiModelProperty(required = true)
-    private String description;
+  @ApiModelProperty(required = true)
+  private String product;
+  @ApiModelProperty(required = true)
+  private String locationType;
+  @ApiModelProperty(required = true)
+  private String locationId;
+  @ApiModelProperty(required = true)
+  private String description;
 }

@@ -7,6 +7,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface RequestToModelMapper {
 
-    TestModelRequest modelToRequest(TestModel testModel);
-    TestModel requestToModel(TestModelRequest testModelRequest);
+  TestModelRequest modelToRequest(TestModel testModel);
+
+  TestModel requestToModel(TestModelRequest testModelRequest);
 }

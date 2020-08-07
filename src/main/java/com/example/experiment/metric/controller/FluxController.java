@@ -18,31 +18,32 @@ import java.util.function.Function;
 @RestController
 @RequestMapping(value = FluxController.ENDPOINT)
 public class FluxController {
-    public static final String ENDPOINT = "/metric/test";
 
-    @Autowired
-    private ExecutorService executorService;
+  public static final String ENDPOINT = "/metric/test";
 
-    @GetMapping(path = "next/ten/numbers/{id}")
-    @ApiOperation(value = "Number generator", notes = "Api to generate next 10 numbers from the passed number")
-    public Flux<ResponseEntity<Integer>> getNextNumber(
-            @ApiParam(required = true, example = "10") @PathVariable Integer id) {
+  @Autowired
+  private ExecutorService executorService;
 
-        return Flux.range(id, 11)
-                .subscribeOn(Schedulers.fromExecutorService(executorService))
-                .name("fluxCounter")
-                .tag("uri", ENDPOINT)
-                .doOnNext(integer -> System.out.println("Number Emitted " + integer+ " on Thread "+ Thread.currentThread().getName()))
-                .transform(handleResponse())
-                .metrics();
+  @GetMapping(path = "next/ten/numbers/{id}")
+  @ApiOperation(value = "Number generator", notes = "Api to generate next 10 numbers from the passed number")
+  public Flux<ResponseEntity<Integer>> getNextNumber(
+      @ApiParam(required = true, example = "10") @PathVariable Integer id) {
 
-    }
+    return Flux.range(id, 11)
+        .subscribeOn(Schedulers.fromExecutorService(executorService))
+        .name("fluxCounter")
+        .tag("uri", ENDPOINT)
+        .doOnNext(integer -> System.out.println("Number Emitted " + integer + " on Thread " + Thread.currentThread().getName()))
+        .transform(handleResponse())
+        .metrics();
 
-    public Function<Flux<Integer>, Flux<ResponseEntity<Integer>>> handleResponse() {
-        return integer -> integer
-                .map(value -> ResponseEntity.status(HttpStatus.ACCEPTED).body(value))
-                .defaultIfEmpty(ResponseEntity.status(HttpStatus.NO_CONTENT).body((Integer) null));
+  }
 
-    }
+  public Function<Flux<Integer>, Flux<ResponseEntity<Integer>>> handleResponse() {
+    return integer -> integer
+        .map(value -> ResponseEntity.status(HttpStatus.ACCEPTED).body(value))
+        .defaultIfEmpty(ResponseEntity.status(HttpStatus.NO_CONTENT).body((Integer) null));
+
+  }
 }
 
