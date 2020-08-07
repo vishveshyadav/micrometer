@@ -1,6 +1,9 @@
 package com.example.experiment.metric.runner;
 
 import com.fasterxml.classmate.TypeResolver;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -14,10 +17,6 @@ import springfox.documentation.schema.WildcardType;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 @Configuration
 public class SwaggerConfiguration {

@@ -2,12 +2,11 @@ package com.example.experiment.metric.runner;
 
 import io.micrometer.core.aop.TimedAspect;
 import io.micrometer.core.instrument.MeterRegistry;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 @Configuration
 public class MetricConfigurations {
