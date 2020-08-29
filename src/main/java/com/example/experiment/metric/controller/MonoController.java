@@ -29,8 +29,7 @@ public class MonoController {
   @GetMapping(path = "next/ten/numbers/{id}")
   @ApiOperation(value = "Number generator", notes = "Api to generate next 10 numbers from the passed number")
   public Mono<ResponseEntity<TreeSet<Integer>>> getNextNumber(
-      @ApiParam(required = true, example = "10") @PathVariable Integer id) throws InterruptedException {
-    Thread.sleep(5000);
+      @ApiParam(required = true, example = "10") @PathVariable Integer id) {
     return Flux.range(++id, 10)
         .subscribeOn(Schedulers.fromExecutorService(executorService))
         .name("fluxCounter")
@@ -39,7 +38,6 @@ public class MonoController {
         .collect(Collectors.toCollection(TreeSet::new))
         .transform(handleResponse())
         .metrics();
-
   }
 
   public Function<Mono<TreeSet<Integer>>, Mono<ResponseEntity<TreeSet<Integer>>>> handleResponse() {
