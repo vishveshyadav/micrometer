@@ -1,5 +1,10 @@
 server:
   port: 8085
+  shutdown: graceful
+
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 10000 #Maximum time in milliseconds to complete the pending request before application shutdown
 
 management:
   metrics:
@@ -7,7 +12,7 @@ management:
       influx:
         auto-create-db: true
         db: customdb
-        enabled: true
+        enabled: false
         uri: http://influx-cluster-ip-service:8086  # change the hostname to localhost for running on local env or your docker service name for docker env
         user-admin: THOR
         step: 10s

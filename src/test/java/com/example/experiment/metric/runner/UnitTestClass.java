@@ -1,22 +1,23 @@
 package com.example.experiment.metric.runner;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 import reactor.test.StepVerifier;
 
-import java.util.concurrent.*;
-
-@ExtendWith(SpringExtension.class)
-public class UnitTestClass {
+class UnitTestClass {
 
 
   @Test
-  public void test() {
+  void test() {
 
     ThreadFactory threadFactory = new BasicThreadFactory.Builder().namingPattern("CustomThread -%d").build();
     ExecutorService threadpool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), threadFactory);
@@ -47,7 +48,7 @@ public class UnitTestClass {
   }
 
   @Test
-  public void testError() {
+   void testError() {
     Flux.range(1, 10)
         .flatMap(num -> {
           if (num > 5) {
@@ -56,14 +57,14 @@ public class UnitTestClass {
             return Flux.just(num);
           }
         })
-        .doOnError(error -> System.out.println(error))
+        .doOnError(System.out::println)
         .doOnError(error -> System.out.println("Emitting backup Flux"))
         .onErrorResume(error -> Flux.range(1, 5))
-        .subscribe(num -> System.out.println(num));
+        .subscribe(System.out::println);
   }
 
   @Test
-  public void testErrorA() {
+   void testErrorA() {
     Flux<Integer> flux = Flux.just(1, 2, 3, 4, 0, 21)
         .map(num -> 100 / num)
         .onErrorReturn(100);
@@ -75,7 +76,7 @@ public class UnitTestClass {
   }
 
   @Test
-  public void testErrorB() {
+   void testErrorB() {
     Flux<Integer> flux = Flux.just(1, 2, 3, 4, 0, 21)
         .map(num -> 100 / num)
         .onErrorContinue((error, value) -> {
@@ -97,5 +98,50 @@ public class UnitTestClass {
         .expectNextCount(5)
         .expectComplete()
         .verify();
+  }
+
+  @Test
+   void testZip() {
+
+    Mono<String> inputA = Mono.just("InputA");
+    inputA.zipWhen(input -> Mono.just(input.length()))
+        .flatMap(tuple -> {
+          String length = tuple.getT1() + " has " + tuple.getT2() + " characters";
+          return Mono.just(length);
+        })
+        .subscribe(System.out::println);
+
+    Mono<String> inputB = Mono.just("Input");
+    Mono<String> inputC = Mono.just("A");
+    inputB.zipWith(inputC, (inputX, inputY) -> inputX + inputY)
+        .map(String::length)
+        .subscribe(System.out::println);
+
+  }
+
+  @Test
+   void testZipA() {
+    Mono<Integer> numbers = Mono.just(10);
+    numbers.flatMap(this::processString)
+        .subscribe();
+
+  }
+
+  Mono<String> processString(Integer number) {
+    return Mono.just(number.toString())
+        .doOnNext(System.out::println);
+  }
+
+  @Test
+   void delay() {
+    AtomicBoolean flag = new AtomicBoolean(false);
+    Flux<Boolean> flux = Flux.just(false, true, false);
+    flux
+        .map(val -> {
+          flag.compareAndSet(false, val);
+          return val;
+        })
+        .doOnComplete(() -> System.out.println("processFinished " + flag.get()))
+        .subscribe();
   }
 }
