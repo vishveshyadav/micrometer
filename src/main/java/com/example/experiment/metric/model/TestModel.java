@@ -1,6 +1,7 @@
 package com.example.experiment.metric.model;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,12 +13,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TestModel {
 
-  @ApiModelProperty(required = true)
+  @Schema(required = true, accessMode = AccessMode.READ_WRITE)
   private String product;
-  @ApiModelProperty(required = true)
+  @Schema(required = true, accessMode = AccessMode.READ_WRITE)
   private String locationType;
-  @ApiModelProperty(required = true)
+  @Schema(required = true, accessMode = AccessMode.READ_WRITE)
   private String locationId;
-  @ApiModelProperty(required = true)
+  @Schema(required = true, accessMode = AccessMode.READ_WRITE)
   private String description;
+
 }
+

@@ -6,7 +6,10 @@ import java.util.concurrent.ThreadFactory;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.availability.AvailabilityChangeEvent;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.event.EventListener;
 import reactor.core.scheduler.Schedulers;
 
 @SpringBootApplication(scanBasePackages = "com.example.experiment.metric")
@@ -21,5 +24,15 @@ public class MetricExperimentApplication {
   public ExecutorService initThreadPool() {
     ThreadFactory threadPool = new BasicThreadFactory.Builder().namingPattern("CustomThread - %d").build();
     return Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), threadPool);
+  }
+
+  @EventListener(ApplicationReadyEvent.class)
+  public void notification(){
+    System.out.println("Application is now ready to serve requests");
+  }
+
+  @EventListener(AvailabilityChangeEvent.class)
+  public void applicationStateChange(){
+    System.out.println("Application state updated");
   }
 }

@@ -1,5 +1,6 @@
 package com.example.experiment.metric.runner;
 
+import java.net.UnknownHostException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -142,6 +143,13 @@ class UnitTestClass {
           return val;
         })
         .doOnComplete(() -> System.out.println("processFinished " + flag.get()))
+        .subscribe();
+  }
+  @Test
+  void testA(){
+    Mono.error(new UnknownHostException())
+       // .doOnError(err -> System.out.println(err))
+     //   .onErrorContinue((throwable, o) -> System.out.println(throwable))
         .subscribe();
   }
 }

@@ -7,8 +7,8 @@ import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Function;
 import javax.validation.Valid;
@@ -37,9 +37,9 @@ public class MetricController {
   private Counter counter;
 
   @PostMapping
-  @ApiOperation(value = "API to create new Resource", notes = "API to create new Resource")
+  @Operation(summary = "API to create new Resource", description = "API to create new Resource")
   @Timed("getTestModel")
-  public Mono<ResponseEntity<TestModel>> getTestModel(@ApiParam(required = true) @Valid @RequestBody TestModelRequest testModelRequest) {
+  public Mono<ResponseEntity<TestModel>> getTestModel(@Parameter(required = true) @Valid @RequestBody TestModelRequest testModelRequest) {
     return Mono.just(requestToModelMapper.requestToModel(testModelRequest))
         .name("fluxcreate")
         .subscribeOn(Schedulers.fromExecutorService(executorService))

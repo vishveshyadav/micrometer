@@ -1,7 +1,7 @@
 package com.example.experiment.metric.controller;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Function;
@@ -27,9 +27,9 @@ public class MonoController {
   private ExecutorService executorService;
 
   @GetMapping(path = "next/ten/numbers/{id}")
-  @ApiOperation(value = "Number generator", notes = "Api to generate next 10 numbers from the passed number")
+  @Operation(summary = "Number generator", description = "Api to generate next 10 numbers from the passed number")
   public Mono<ResponseEntity<TreeSet<Integer>>> getNextNumber(
-      @ApiParam(required = true, example = "10") @PathVariable Integer id) {
+      @Parameter(required = true, example = "10") @PathVariable Integer id) {
     return Flux.range(++id, 10)
         .subscribeOn(Schedulers.fromExecutorService(executorService))
         .name("fluxCounter")

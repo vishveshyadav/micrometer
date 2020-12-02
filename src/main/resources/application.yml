@@ -1,10 +1,12 @@
 server:
   port: 8085
   shutdown: graceful
+  error:
+    include-message: always
 
 spring:
   lifecycle:
-    timeout-per-shutdown-phase: 10000 #Maximum time in milliseconds to complete the pending request before application shutdown
+    timeout-per-shutdown-phase: 10000 #Maximum time in milliseconds to complete the pending request(in-flight requests) before application shutdown
 
 management:
   metrics:
@@ -20,3 +22,14 @@ management:
     web:
       exposure:
         include: "*"
+
+springdoc:
+  packagesToScan : com.example.experiment.metric
+  show-actuator: true
+  swagger-ui:
+      operationsSorter: alpha
+      tagsSorter: alpha
+      supportedSubmitMethods :
+        - get
+        - put
+        - post
