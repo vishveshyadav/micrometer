@@ -13,9 +13,9 @@ management:
     export:
       influx:
         auto-create-db: true
-        db: customdb
-        enabled: true
-        uri: http://influx-cluster-ip-service:8086  # change the hostname to localhost for running on local env or your docker service name for docker env
+        db: telegraf
+        enabled: false
+        uri: http://localhost:8086  # change the hostname to localhost for running on local env or your docker service name for docker env
         user-admin: THOR
         step: 10s
   endpoints:
@@ -33,3 +33,6 @@ springdoc:
         - get
         - put
         - post
+block:
+  post:
+    enabled : true

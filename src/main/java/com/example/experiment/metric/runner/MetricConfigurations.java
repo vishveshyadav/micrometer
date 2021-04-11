@@ -2,11 +2,13 @@ package com.example.experiment.metric.runner;
 
 import io.micrometer.core.aop.TimedAspect;
 import io.micrometer.core.instrument.MeterRegistry;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import io.micrometer.influx.InfluxMeterRegistry;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 @Configuration
 public class MetricConfigurations {
@@ -22,10 +24,8 @@ public class MetricConfigurations {
   }
 
   @Bean
-  public MeterRegistryCustomizer customizer(String hostName) {
-    return (registry) -> {
-      registry.config().commonTags(new String[]{"host", hostName});
-    };
+  MeterRegistryCustomizer<InfluxMeterRegistry> metricsCommonTags(String hostName) {
+    return registry -> registry.config().commonTags("host", hostName);
   }
 
 }

@@ -10,11 +10,12 @@
 
   <properties>
     <java.version>1.8</java.version>
-    <spring.boot.version>2.3.3.RELEASE</spring.boot.version>
-    <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
-    <springdoc.version>1.5.0</springdoc.version>
-    <lombok.version>1.18.16</lombok.version>
+    <spring.boot.version>2.3.9.RELEASE</spring.boot.version>
+    <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+    <springdoc.version>1.5.7</springdoc.version>
+    <lombok.version>1.18.18</lombok.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <skipTests>false</skipTests>
   </properties>
 
   <dependencyManagement>
@@ -130,14 +131,14 @@
           <target>${java.version}</target>
           <annotationProcessorPaths>
             <path>
-              <groupId>org.mapstruct</groupId>
-              <artifactId>mapstruct-processor</artifactId>
-              <version>${org.mapstruct.version}</version>
-            </path>
-            <path>
               <groupId>org.projectlombok</groupId>
               <artifactId>lombok</artifactId>
               <version>${lombok.version}</version>
+            </path>
+            <path>
+              <groupId>org.mapstruct</groupId>
+              <artifactId>mapstruct-processor</artifactId>
+              <version>${org.mapstruct.version}</version>
             </path>
           </annotationProcessorPaths>
         </configuration>
@@ -148,8 +149,9 @@
         <version>2.22.2</version>
         <configuration>
           <includes>
-            <include>%regex[.*UnitTest.*]</include>
+            <include>%regex[.*Test.*]</include>
           </includes>
+          <skipTests>${skipTests}</skipTests>
         </configuration>
 
       </plugin>
